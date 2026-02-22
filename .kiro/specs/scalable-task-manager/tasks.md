@@ -8,7 +8,7 @@ The implementation follows a bottom-up approach: database models → controllers
 
 ## Tasks
 
-- [ ] 1. Set up project structure and dependencies
+- [x] 1. Set up project structure and dependencies
   - Create `/backend` and `/frontend` folders
   - Initialize backend: `npm init`, install dependencies (express, mongoose, bcrypt, jsonwebtoken, express-validator, dotenv, cookie-parser, cors, nodemon)
   - Initialize frontend: `npx create-next-app@latest frontend --typescript --tailwind --app`, install dependencies (axios, react-hook-form, zod, @hookform/resolvers, lucide-react, react-hot-toast)
@@ -18,53 +18,53 @@ The implementation follows a bottom-up approach: database models → controllers
   - Create .env.example files for both projects
   - _Requirements: 20.1, 20.4_
 
-- [ ] 2. Implement database configuration and models
-  - [ ] 2.1 Create database connection (config/db.js)
+- [x] 2. Implement database configuration and models
+  - [x] 2.1 Create database connection (config/db.js)
     - Implement MongoDB connection using Mongoose
     - Add connection error handling and logging
     - _Requirements: 19.5_
 
-  - [ ] 2.2 Create User model (models/User.js)
+  - [x] 2.2 Create User model (models/User.js)
     - Define schema with name, email (unique), password, createdAt fields
     - Add pre-save hook for password hashing with bcrypt (salt rounds: 10)
     - Add matchPassword method for credential verification
     - Add toJSON method to exclude password from responses
     - _Requirements: 19.1, 1.5, 3.4_
 
-  - [ ] 2.3 Create Task model (models/Task.js)
+  - [x] 2.3 Create Task model (models/Task.js)
     - Define schema with title, description, status (enum), dueDate, user reference
     - Enable timestamps (createdAt, updatedAt)
     - Add indexes for efficient querying (user + status, text search on title/description)
     - _Requirements: 19.2_
 
-  - [ ] 2.4 Write property test for User model
+  - [x] 2.4 Write property test for User model
     - **Property 1: Registration creates valid user accounts**
     - **Validates: Requirements 1.1, 1.5**
 
-  - [ ] 2.5 Write property test for password hashing
+  - [x] 2.5 Write property test for password hashing
     - **Property 6: Authenticated users can access their profile (password not exposed)**
     - **Validates: Requirements 3.4**
 
-- [ ] 3. Implement authentication utilities and middleware
-  - [ ] 3.1 Create JWT token generator (utils/generateToken.js)
+- [-] 3. Implement authentication utilities and middleware
+  - [x] 3.1 Create JWT token generator (utils/generateToken.js)
     - Implement function to generate JWT with 1 day expiration
     - Use JWT_SECRET from environment variables
     - _Requirements: 18.2_
 
-  - [ ] 3.2 Create authentication middleware (middleware/authMiddleware.js)
+  - [x] 3.2 Create authentication middleware (middleware/authMiddleware.js)
     - Implement protect middleware to verify JWT from cookies
     - Extract user ID from token and attach to request
     - Handle missing or invalid tokens with 401 response
     - _Requirements: 3.3_
 
-  - [ ] 3.3 Create error handling middleware (middleware/errorMiddleware.js)
+  - [x] 3.3 Create error handling middleware (middleware/errorMiddleware.js)
     - Implement centralized error handler for all error types
     - Map error types to appropriate HTTP status codes (400, 401, 403, 404, 500)
     - Format consistent error responses
     - Log server errors, sanitize client responses
     - _Requirements: 17.1, 17.2, 17.3, 17.4_
 
-  - [ ] 3.4 Write property test for authentication middleware
+  - [-] 3.4 Write property test for authentication middleware
     - **Property 8: Unauthenticated requests are rejected**
     - **Validates: Requirements 3.3**
 
@@ -72,15 +72,15 @@ The implementation follows a bottom-up approach: database models → controllers
     - **Property 42: Error types map to correct status codes**
     - **Validates: Requirements 17.4**
 
-- [ ] 4. Implement authentication controller and routes
-  - [ ] 4.1 Create auth controller (controllers/authController.js)
+- [-] 4. Implement authentication controller and routes
+  - [x] 4.1 Create auth controller (controllers/authController.js)
     - Implement register function: validate input, create user, generate token, set cookie
     - Implement login function: validate credentials, generate token, set cookie
     - Implement logout function: clear authentication cookie
     - Add express-validator validation chains
     - _Requirements: 1.1, 1.3, 1.4, 2.1, 2.2, 2.3, 2.4_
 
-  - [ ] 4.2 Create auth routes (routes/authRoutes.js)
+  - [x] 4.2 Create auth routes (routes/authRoutes.js)
     - Define POST /api/auth/register → authController.register
     - Define POST /api/auth/login → authController.login
     - Define POST /api/auth/logout → authController.logout
@@ -110,14 +110,14 @@ The implementation follows a bottom-up approach: database models → controllers
     - Test that logout clears authentication cookie
     - _Requirements: 2.4_
 
-- [ ] 5. Implement user profile controller and routes
-  - [ ] 5.1 Create user controller (controllers/userController.js)
+- [-] 5. Implement user profile controller and routes
+  - [x] 5.1 Create user controller (controllers/userController.js)
     - Implement getProfile function: return authenticated user's profile
     - Implement updateProfile function: validate and update user data
     - Add express-validator validation chains
     - _Requirements: 3.1, 3.2_
 
-  - [ ] 5.2 Create user routes (routes/userRoutes.js)
+  - [x] 5.2 Create user routes (routes/userRoutes.js)
     - Define GET /api/user/profile → userController.getProfile (protected)
     - Define PUT /api/user/profile → userController.updateProfile (protected)
     - Apply protect middleware to all routes
@@ -131,14 +131,14 @@ The implementation follows a bottom-up approach: database models → controllers
     - **Property 7: Profile updates are validated and applied**
     - **Validates: Requirements 3.2**
 
-- [ ] 6. Checkpoint - Backend authentication complete
+- [-] 6. Checkpoint - Backend authentication complete
   - Ensure all authentication tests pass
   - Verify JWT tokens are generated and validated correctly
   - Test registration, login, logout, and profile endpoints manually
   - Ask the user if questions arise
 
-- [ ] 7. Implement task controller and routes
-  - [ ] 7.1 Create task controller (controllers/taskController.js)
+- [-] 7. Implement task controller and routes
+  - [x] 7.1 Create task controller (controllers/taskController.js)
     - Implement createTask: validate input, create task with user association, set timestamps
     - Implement getTasks: return user's tasks with optional search and status filter
     - Implement getTaskById: return task if owned by user, else 404
@@ -147,7 +147,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Add express-validator validation chains for all operations
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 5.1, 5.2, 5.3, 5.4, 6.1, 6.2, 6.3, 6.4, 7.1, 7.2, 7.3, 8.1, 8.3, 9.1, 9.4_
 
-  - [ ] 7.2 Create task routes (routes/taskRoutes.js)
+  - [x] 7.2 Create task routes (routes/taskRoutes.js)
     - Define POST /api/tasks → taskController.createTask (protected)
     - Define GET /api/tasks → taskController.getTasks (protected, supports ?search=keyword&status=completed)
     - Define GET /api/tasks/:id → taskController.getTaskById (protected)
@@ -217,8 +217,8 @@ The implementation follows a bottom-up approach: database models → controllers
     - Test that no status filter returns all user tasks
     - _Requirements: 9.2_
 
-- [ ] 9. Complete backend server setup
-  - [ ] 9.1 Create main server file (server.js)
+- [-] 9. Complete backend server setup
+  - [x] 9.1 Create main server file (server.js)
     - Import and configure express app
     - Add middleware: express.json(), cookie-parser, cors (with credentials)
     - Mount routes: /api/auth, /api/user, /api/tasks
@@ -227,7 +227,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Start server on PORT from environment
     - _Requirements: 18.1, 18.2_
 
-  - [ ] 9.2 Create .env.example file
+  - [x] 9.2 Create .env.example file
     - Document required environment variables: MONGO_URI, JWT_SECRET, PORT, NODE_ENV
     - _Requirements: 18.2_
 
@@ -235,15 +235,15 @@ The implementation follows a bottom-up approach: database models → controllers
     - Test that CORS headers are present in responses
     - _Requirements: 18.1_
 
-- [ ] 10. Checkpoint - Backend complete
+- [~] 10. Checkpoint - Backend complete
   - Ensure all backend tests pass
   - Test all API endpoints manually with Postman or similar
   - Verify error handling works correctly
   - Verify search and filter work as expected
   - Ask the user if questions arise
 
-- [ ] 11. Set up frontend API client and authentication context
-  - [ ] 11.1 Create API client (lib/api.ts)
+- [-] 11. Set up frontend API client and authentication context
+  - [x] 11.1 Create API client (lib/api.ts)
     - Create Axios instance with base URL and credentials config
     - Add response interceptor for error handling (401 → redirect to login)
     - Implement API methods: auth.register, auth.login, auth.logout
@@ -251,7 +251,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Implement API methods: tasks.create, tasks.getAll, tasks.getById, tasks.update, tasks.delete
     - _Requirements: 10.4_
 
-  - [ ] 11.2 Create authentication context (context/AuthContext.tsx)
+  - [x] 11.2 Create authentication context (context/AuthContext.tsx)
     - Define AuthContext with user state, loading state, and auth methods
     - Implement login function: call API, update state, redirect to dashboard
     - Implement register function: call API, update state, redirect to dashboard
@@ -264,8 +264,8 @@ The implementation follows a bottom-up approach: database models → controllers
     - **Property 23: Authentication persists across page reloads**
     - **Validates: Requirements 10.4**
 
-- [ ] 12. Implement authentication pages
-  - [ ] 12.1 Create registration page (app/register/page.tsx)
+- [-] 12. Implement authentication pages
+  - [x] 12.1 Create registration page (app/register/page.tsx)
     - Build split-screen layout: left side with playful illustration, right side with form
     - Create illustration component with yellow character and floating icons
     - Build form card with white background, rounded corners, shadow
@@ -279,7 +279,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Make responsive: stack vertically on mobile
     - _Requirements: 1.1, 1.3, 10.2, 16.1, 16.3, 16.4, 16.5_
 
-  - [ ] 12.2 Create login page (app/login/page.tsx)
+  - [x] 12.2 Create login page (app/login/page.tsx)
     - Build same split-screen layout as register page
     - Reuse illustration component
     - Build form card with "TaskFlow" heading
@@ -293,7 +293,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Make responsive
     - _Requirements: 2.1, 2.2, 10.2, 16.1, 16.3, 16.4, 16.5_
 
-  - [ ] 12.3 Create illustration component (components/LoginIllustration.tsx)
+  - [~] 12.3 Create illustration component (components/LoginIllustration.tsx)
     - Build playful abstract character with yellow circular head
     - Add wavy connecting lines
     - Add floating icons: document (FileText), checkmark (CheckCircle), list (List)
@@ -322,7 +322,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - **Validates: Requirements 16.2**
 
 - [ ] 13. Implement protected route component
-  - [ ] 13.1 Create ProtectedRoute component (components/ProtectedRoute.tsx)
+  - [~] 13.1 Create ProtectedRoute component (components/ProtectedRoute.tsx)
     - Check authentication state from AuthContext
     - Show loading indicator while checking auth
     - Redirect to login if not authenticated
@@ -338,7 +338,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - _Requirements: 10.3_
 
 - [ ] 14. Implement task management hook
-  - [ ] 14.1 Create useTasks hook (hooks/useTasks.ts)
+  - [~] 14.1 Create useTasks hook (hooks/useTasks.ts)
     - Manage tasks state, loading state, error state
     - Implement fetchTasks function with optional search and filter params
     - Implement createTask function: call API, update state, show toast
@@ -347,14 +347,14 @@ The implementation follows a bottom-up approach: database models → controllers
     - _Requirements: 12.2, 12.4, 13.1, 13.2, 14.2_
 
 - [ ] 15. Implement task UI components
-  - [ ] 15.1 Create TaskCard component (components/TaskCard.tsx)
+  - [~] 15.1 Create TaskCard component (components/TaskCard.tsx)
     - Display task title, description, status badge, due date
     - Add edit and delete buttons
     - Call onEdit and onDelete callbacks from props
     - Style with TailwindCSS, add hover states
     - _Requirements: 12.3, 12.4, 14.4_
 
-  - [ ] 15.2 Create TaskModal component (components/TaskModal.tsx)
+  - [~] 15.2 Create TaskModal component (components/TaskModal.tsx)
     - Build form with fields: title, description, status dropdown, due date picker
     - Implement validation using React Hook Form + Zod
     - Support both create and edit modes (pre-populate for edit)
@@ -379,7 +379,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - _Requirements: 12.1_
 
 - [ ] 16. Implement navigation component
-  - [ ] 16.1 Create Navbar component (components/Navbar.tsx)
+  - [~] 16.1 Create Navbar component (components/Navbar.tsx)
     - Display app branding/logo
     - Show user name when authenticated
     - Add logout button that calls logout from AuthContext
@@ -388,7 +388,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - _Requirements: 15.1, 15.2, 15.3_
 
 - [ ] 17. Implement dashboard page
-  - [ ] 17.1 Create dashboard page (app/dashboard/page.tsx)
+  - [~] 17.1 Create dashboard page (app/dashboard/page.tsx)
     - Wrap with ProtectedRoute component
     - Display user profile (name, email) from AuthContext
     - Calculate and display task statistics (total, completed, pending)
@@ -439,7 +439,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - _Requirements: 14.3_
 
 - [ ] 18. Implement responsive design
-  - [ ] 18.1 Add responsive styles to all components
+  - [~] 18.1 Add responsive styles to all components
     - Ensure mobile layout (320px+) works correctly
     - Ensure tablet layout (768px+) works correctly
     - Ensure desktop layout (1024px+) works correctly
@@ -454,14 +454,14 @@ The implementation follows a bottom-up approach: database models → controllers
     - _Requirements: 15.1, 15.2, 15.3_
 
 - [ ] 19. Implement landing page
-  - [ ] 19.1 Create landing page (app/page.tsx)
+  - [~] 19.1 Create landing page (app/page.tsx)
     - Add welcome message and app description
     - Add navigation links to login and register pages
     - Style with TailwindCSS
     - Make responsive
     - _Requirements: 15.1, 15.2, 15.3_
 
-- [ ] 20. Checkpoint - Frontend complete
+- [~] 20. Checkpoint - Frontend complete
   - Ensure all frontend tests pass
   - Test all user flows manually (register → login → dashboard → CRUD tasks → logout)
   - Verify responsive design on different screen sizes
@@ -469,7 +469,7 @@ The implementation follows a bottom-up approach: database models → controllers
   - Ask the user if questions arise
 
 - [ ] 21. Create documentation
-  - [ ] 21.1 Create backend README.md
+  - [~] 21.1 Create backend README.md
     - Add project description and features
     - Document setup instructions (npm install, .env configuration)
     - List all environment variables with descriptions
@@ -477,7 +477,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Add testing instructions (npm test)
     - _Requirements: All_
 
-  - [ ] 21.2 Create frontend README.md
+  - [~] 21.2 Create frontend README.md
     - Add project description and features
     - Document setup instructions (npm install, environment configuration)
     - Document available scripts (dev, build, test)
@@ -485,7 +485,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Add testing instructions
     - _Requirements: All_
 
-  - [ ] 21.3 Create root README.md
+  - [~] 21.3 Create root README.md
     - Add overall project description
     - Document tech stack
     - Add setup instructions for both frontend and backend
@@ -493,7 +493,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Add scalability plan: Nginx reverse proxy, Docker containerization, MongoDB Atlas, Redis caching, load balancing, CI/CD pipeline, rate limiting, horizontal scaling
     - _Requirements: All_
 
-  - [ ] 21.4 Create Postman collection
+  - [~] 21.4 Create Postman collection
     - Add all API endpoints with example requests
     - Include authentication flow examples
     - Add environment variables for base URL and tokens
@@ -523,7 +523,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Test API response times under load
     - _Requirements: 1.5, 2.3, 3.4, 18.1, 18.3, 18.4_
 
-- [ ] 23. Final checkpoint - Project complete
+- [~] 23. Final checkpoint - Project complete
   - Ensure all tests pass
   - Verify all documentation is complete and accurate
   - Confirm application is production-ready
