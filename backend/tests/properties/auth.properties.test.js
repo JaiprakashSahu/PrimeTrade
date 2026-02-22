@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { protect } from '../../middleware/authMiddleware.js';
+import { register, registerValidation } from '../../controllers/authController.js';
 import User from '../../models/User.js';
 import generateToken from '../../utils/generateToken.js';
 
@@ -42,6 +43,9 @@ beforeAll(async () => {
       userId: req.user._id
     });
   });
+
+  // Registration route for testing
+  app.post('/api/auth/register', registerValidation, register);
 });
 
 afterAll(async () => {
@@ -189,4 +193,202 @@ describe('Property 8: Unauthenticated requests are rejected', () => {
       { numRuns: 20 }
     );
   }, 30000);
+});
+
+/**
+ * Property 2: Invalid registration data is rejected
+ * **Validates: Requirements 1.3**
+ * 
+ * For any invalid registration data (missing required fields, invalid email format, 
+ * password too short), the registration attempt should be rejected with specific 
+ * field-level error messages.
+ */
+describe('Property 2: Invalid registration data is rejected', () => {
+  it('should reject registration with missing required fields', async () => {
+    await fc.assert(
+      fc.asyncProperty(
+        fc.record({
+          // Generate incomplete registration data by randomly omitting required fields
+          name: fc.option(fc.string({ minLength: 1, maxLength: 100 }), { nil: undefined }),
+          email: fc.option(fc.emailAddress(), { nil: undefined }),
+          password: fc.option(fc.string({ minLength: 1, maxLength: 50 }), { nil: undefined })
+        }).filter(data => 
+          // Ensure at least one required field is missing or empty
+          !data.name || !data.email || !data.password ||
+          data.name.trim() === '' || data.email.trim() === '' || data.password === ''
+        ),
+        async (invalidData) => {
+          const res = await request(app)
+            .post('/api/auth/register')
+            .send(invalidData);
+
+          // Verify request is rejected with 400 Bad Request
+          expect(res.status).toBe(400);
+          expect(res.body.success).toBe(false);
+          expect(res.body.message).toBe('Validation failed');
+          expect(res.body.errors).toBeDefined();
+          expect(Array.isArray(res.body.errors)).toBe(true);
+          expect(res.body.errors.length).toBeGreaterThan(0);
+
+          // Verify each error has field and message
+          res.body.errors.forEach(error => {
+            expect(error.field).toBeDefined();
+            expect(error.message).toBeDefined();
+            expect(typeof error.field).toBe('string');
+            expect(typeof error.message).toBe('string');
+          });
+        }
+      ),
+      { numRuns: 10 }
+    );
+  }, 60000);
+
+  it('should reject registration with invalid email format', async () => {
+    await fc.assert(
+      fc.asyncProperty(
+        fc.record({
+          name: fc.string({ minLength: 2, maxLength: 100 }).filter(s => s.trim().length >= 2),
+          // Generate invalid email formats
+          email: fc.oneof(
+            fc.string({ minLength: 1, maxLength: 50 }).filter(s => !s.includes('@')), // No @ symbol
+            fc.string({ minLength: 1, maxLength: 20 }).map(s => s + '@'), // Missing domain
+            fc.string({ minLength: 1, maxLength: 20 }).map(s => '@' + s), // Missing local part
+            fc.constant('invalid.email'), // No @ or domain
+            fc.constant('test@'), // Missing domain
+            fc.constant('@domain.com'), // Missing local part
+            fc.string({ minLength: 1, maxLength: 20 }).map(s => s + '@domain'), // Missing TLD
+          ),
+          password: fc.string({ minLength: 6, maxLength: 50 })
+        }),
+        async (invalidData) => {
+          const res = await request(app)
+            .post('/api/auth/register')
+            .send(invalidData);
+
+          // Verify request is rejected with 400 Bad Request
+          expect(res.status).toBe(400);
+          expect(res.body.success).toBe(false);
+          expect(res.body.message).toBe('Validation failed');
+          expect(res.body.errors).toBeDefined();
+          
+          // Verify there's an email validation error
+          const emailError = res.body.errors.find(err => err.field === 'email');
+          expect(emailError).toBeDefined();
+          expect(emailError.message).toMatch(/valid email|email/i);
+        }
+      ),
+      { numRuns: 10 }
+    );
+  }, 60000);
+
+  it('should reject registration with password too short', async () => {
+    await fc.assert(
+      fc.asyncProperty(
+        fc.record({
+          name: fc.string({ minLength: 2, maxLength: 100 }).filter(s => s.trim().length >= 2),
+          email: fc.emailAddress(),
+          // Generate passwords shorter than 6 characters
+          password: fc.string({ minLength: 0, maxLength: 5 })
+        }),
+        async (invalidData) => {
+          const res = await request(app)
+            .post('/api/auth/register')
+            .send(invalidData);
+
+          // Verify request is rejected with 400 Bad Request
+          expect(res.status).toBe(400);
+          expect(res.body.success).toBe(false);
+          expect(res.body.message).toBe('Validation failed');
+          expect(res.body.errors).toBeDefined();
+          
+          // Verify there's a password validation error
+          const passwordError = res.body.errors.find(err => err.field === 'password');
+          expect(passwordError).toBeDefined();
+          expect(passwordError.message).toMatch(/6 characters|password/i);
+        }
+      ),
+      { numRuns: 10 }
+    );
+  }, 60000);
+
+  it('should reject registration with name too short or too long', async () => {
+    await fc.assert(
+      fc.asyncProperty(
+        fc.record({
+          // Generate names that are too short (< 2 chars) or too long (> 100 chars)
+          name: fc.oneof(
+            fc.string({ minLength: 0, maxLength: 1 }), // Too short
+            fc.string({ minLength: 101, maxLength: 200 }) // Too long
+          ),
+          email: fc.emailAddress(),
+          password: fc.string({ minLength: 6, maxLength: 50 })
+        }),
+        async (invalidData) => {
+          const res = await request(app)
+            .post('/api/auth/register')
+            .send(invalidData);
+
+          // Verify request is rejected with 400 Bad Request
+          expect(res.status).toBe(400);
+          expect(res.body.success).toBe(false);
+          expect(res.body.message).toBe('Validation failed');
+          expect(res.body.errors).toBeDefined();
+          
+          // Verify there's a name validation error
+          const nameError = res.body.errors.find(err => err.field === 'name');
+          expect(nameError).toBeDefined();
+          expect(nameError.message).toMatch(/name|required|characters/i);
+        }
+      ),
+      { numRuns: 10 }
+    );
+  }, 60000);
+
+  it('should reject registration with multiple validation errors', async () => {
+    await fc.assert(
+      fc.asyncProperty(
+        fc.record({
+          // Generate data with multiple validation issues
+          name: fc.oneof(
+            fc.constant(''), // Empty name
+            fc.string({ minLength: 0, maxLength: 1 }), // Too short
+            fc.constant(undefined) // Missing name
+          ),
+          email: fc.oneof(
+            fc.constant('invalid-email'), // Invalid format
+            fc.constant(''), // Empty email
+            fc.constant(undefined) // Missing email
+          ),
+          password: fc.oneof(
+            fc.string({ minLength: 0, maxLength: 5 }), // Too short
+            fc.constant(''), // Empty password
+            fc.constant(undefined) // Missing password
+          )
+        }),
+        async (invalidData) => {
+          const res = await request(app)
+            .post('/api/auth/register')
+            .send(invalidData);
+
+          // Verify request is rejected with 400 Bad Request
+          expect(res.status).toBe(400);
+          expect(res.body.success).toBe(false);
+          expect(res.body.message).toBe('Validation failed');
+          expect(res.body.errors).toBeDefined();
+          expect(Array.isArray(res.body.errors)).toBe(true);
+          
+          // Should have multiple validation errors
+          expect(res.body.errors.length).toBeGreaterThan(0);
+          
+          // Each error should have proper structure
+          res.body.errors.forEach(error => {
+            expect(error.field).toBeDefined();
+            expect(error.message).toBeDefined();
+            expect(['name', 'email', 'password']).toContain(error.field);
+          });
+        }
+      ),
+      { numRuns: 10 }
+    );
+  }, 60000);
 });

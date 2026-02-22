@@ -41,9 +41,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F1E8] flex">
+    <div className="min-h-screen bg-[#F5F1E8] flex flex-col lg:flex-row">
       {/* Left side - Illustration */}
-      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-12">
+      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-8 lg:p-12">
         <div className="relative w-full max-w-md">
           {/* Playful illustration */}
           <div className="relative">
@@ -85,23 +85,23 @@ export default function RegisterPage() {
       </div>
 
       {/* Right side - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6 lg:p-8 min-h-screen lg:min-h-0">
         <div className="w-full max-w-md">
           {/* Logo */}
-          <div className="flex justify-end mb-8">
-            <div className="w-12 h-12 bg-[#F4D03F] rounded-full flex items-center justify-center">
-              <span className="text-sm font-bold">TF</span>
+          <div className="flex justify-center lg:justify-end mb-6 sm:mb-8">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#F4D03F] rounded-full flex items-center justify-center">
+              <span className="text-xs sm:text-sm font-bold">TF</span>
             </div>
           </div>
 
           {/* Form Card */}
-          <div className="bg-white rounded-2xl shadow-md p-8">
-            <h1 className="text-3xl font-bold mb-8">TaskFlow</h1>
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-md p-6 sm:p-8">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">TaskFlow</h1>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
               {/* Name */}
               <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
+                <label htmlFor="name" className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">
                   Name
                 </label>
                 <input
@@ -109,16 +109,16 @@ export default function RegisterPage() {
                   type="text"
                   id="name"
                   placeholder="Your name"
-                  className="w-full px-4 py-3 bg-[#F5F1E8] rounded-lg outline-none focus:ring-2 focus:ring-[#F4D03F] transition-all"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base bg-[#F5F1E8] rounded-lg outline-none focus:ring-2 focus:ring-[#F4D03F] transition-all"
                 />
                 {errors.name && (
-                  <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
+                  <p className="mt-1 text-xs sm:text-sm text-red-500">{errors.name.message}</p>
                 )}
               </div>
 
               {/* Email */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
+                <label htmlFor="email" className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">
                   Email
                 </label>
                 <input
@@ -126,16 +126,16 @@ export default function RegisterPage() {
                   type="email"
                   id="email"
                   placeholder="Your email"
-                  className="w-full px-4 py-3 bg-[#F5F1E8] rounded-lg outline-none focus:ring-2 focus:ring-[#F4D03F] transition-all"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base bg-[#F5F1E8] rounded-lg outline-none focus:ring-2 focus:ring-[#F4D03F] transition-all"
                 />
                 {errors.email && (
-                  <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
+                  <p className="mt-1 text-xs sm:text-sm text-red-500">{errors.email.message}</p>
                 )}
               </div>
 
               {/* Password */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium mb-2">
+                <label htmlFor="password" className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">
                   Password
                 </label>
                 <input
@@ -143,10 +143,10 @@ export default function RegisterPage() {
                   type="password"
                   id="password"
                   placeholder="Your password"
-                  className="w-full px-4 py-3 bg-[#F5F1E8] rounded-lg outline-none focus:ring-2 focus:ring-[#F4D03F] transition-all"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base bg-[#F5F1E8] rounded-lg outline-none focus:ring-2 focus:ring-[#F4D03F] transition-all"
                 />
                 {errors.password && (
-                  <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
+                  <p className="mt-1 text-xs sm:text-sm text-red-500">{errors.password.message}</p>
                 )}
               </div>
 
@@ -154,15 +154,15 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-[#F4D03F] hover:bg-[#E8C12F] text-black font-medium px-6 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#F4D03F] hover:bg-[#E8C12F] text-black font-medium px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Creating account...' : 'Create Account'}
-                {!isLoading && <ArrowRight size={18} />}
+                {!isLoading && <ArrowRight size={16} className="sm:w-[18px] sm:h-[18px]" />}
               </button>
             </form>
 
             {/* Login Link */}
-            <p className="mt-6 text-center text-sm text-gray-600">
+            <p className="mt-4 sm:mt-6 text-center text-xs sm:text-sm text-gray-600">
               Already have an account?{' '}
               <Link href="/login" className="text-[#F4D03F] hover:underline font-medium">
                 Login here

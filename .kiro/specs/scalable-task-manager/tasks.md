@@ -64,11 +64,11 @@ The implementation follows a bottom-up approach: database models → controllers
     - Log server errors, sanitize client responses
     - _Requirements: 17.1, 17.2, 17.3, 17.4_
 
-  - [-] 3.4 Write property test for authentication middleware
+  - [ ] 3.4 Write property test for authentication middleware
     - **Property 8: Unauthenticated requests are rejected**
     - **Validates: Requirements 3.3**
 
-  - [ ] 3.5 Write property test for error handling
+  - [x] 3.5 Write property test for error handling
     - **Property 42: Error types map to correct status codes**
     - **Validates: Requirements 17.4**
 
@@ -86,11 +86,11 @@ The implementation follows a bottom-up approach: database models → controllers
     - Define POST /api/auth/logout → authController.logout
     - _Requirements: 1.1, 2.1, 2.4_
 
-  - [ ] 4.3 Write property test for registration
+  - [-] 4.3 Write property test for registration
     - **Property 3: Successful registration returns JWT cookie**
     - **Validates: Requirements 1.4**
 
-  - [ ] 4.4 Write property test for invalid registration
+  - [-] 4.4 Write property test for invalid registration
     - **Property 2: Invalid registration data is rejected**
     - **Validates: Requirements 1.3**
 
@@ -131,7 +131,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - **Property 7: Profile updates are validated and applied**
     - **Validates: Requirements 3.2**
 
-- [-] 6. Checkpoint - Backend authentication complete
+- [x] 6. Checkpoint - Backend authentication complete
   - Ensure all authentication tests pass
   - Verify JWT tokens are generated and validated correctly
   - Test registration, login, logout, and profile endpoints manually
@@ -235,7 +235,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Test that CORS headers are present in responses
     - _Requirements: 18.1_
 
-- [~] 10. Checkpoint - Backend complete
+- [x] 10. Checkpoint - Backend complete
   - Ensure all backend tests pass
   - Test all API endpoints manually with Postman or similar
   - Verify error handling works correctly
@@ -293,7 +293,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Make responsive
     - _Requirements: 2.1, 2.2, 10.2, 16.1, 16.3, 16.4, 16.5_
 
-  - [~] 12.3 Create illustration component (components/LoginIllustration.tsx)
+  - [x] 12.3 Create illustration component (components/LoginIllustration.tsx)
     - Build playful abstract character with yellow circular head
     - Add wavy connecting lines
     - Add floating icons: document (FileText), checkmark (CheckCircle), list (List)
@@ -322,7 +322,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - **Validates: Requirements 16.2**
 
 - [ ] 13. Implement protected route component
-  - [~] 13.1 Create ProtectedRoute component (components/ProtectedRoute.tsx)
+  - [x] 13.1 Create ProtectedRoute component (components/ProtectedRoute.tsx)
     - Check authentication state from AuthContext
     - Show loading indicator while checking auth
     - Redirect to login if not authenticated
@@ -338,7 +338,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - _Requirements: 10.3_
 
 - [ ] 14. Implement task management hook
-  - [~] 14.1 Create useTasks hook (hooks/useTasks.ts)
+  - [x] 14.1 Create useTasks hook (hooks/useTasks.ts)
     - Manage tasks state, loading state, error state
     - Implement fetchTasks function with optional search and filter params
     - Implement createTask function: call API, update state, show toast
@@ -347,14 +347,14 @@ The implementation follows a bottom-up approach: database models → controllers
     - _Requirements: 12.2, 12.4, 13.1, 13.2, 14.2_
 
 - [ ] 15. Implement task UI components
-  - [~] 15.1 Create TaskCard component (components/TaskCard.tsx)
+  - [x] 15.1 Create TaskCard component (components/TaskCard.tsx)
     - Display task title, description, status badge, due date
     - Add edit and delete buttons
     - Call onEdit and onDelete callbacks from props
     - Style with TailwindCSS, add hover states
     - _Requirements: 12.3, 12.4, 14.4_
 
-  - [~] 15.2 Create TaskModal component (components/TaskModal.tsx)
+  - [x] 15.2 Create TaskModal component (components/TaskModal.tsx)
     - Build form with fields: title, description, status dropdown, due date picker
     - Implement validation using React Hook Form + Zod
     - Support both create and edit modes (pre-populate for edit)
@@ -379,7 +379,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - _Requirements: 12.1_
 
 - [ ] 16. Implement navigation component
-  - [~] 16.1 Create Navbar component (components/Navbar.tsx)
+  - [x] 16.1 Create Navbar component (components/Navbar.tsx)
     - Display app branding/logo
     - Show user name when authenticated
     - Add logout button that calls logout from AuthContext
@@ -388,7 +388,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - _Requirements: 15.1, 15.2, 15.3_
 
 - [ ] 17. Implement dashboard page
-  - [~] 17.1 Create dashboard page (app/dashboard/page.tsx)
+  - [x] 17.1 Create dashboard page (app/dashboard/page.tsx)
     - Wrap with ProtectedRoute component
     - Display user profile (name, email) from AuthContext
     - Calculate and display task statistics (total, completed, pending)
@@ -439,7 +439,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - _Requirements: 14.3_
 
 - [ ] 18. Implement responsive design
-  - [~] 18.1 Add responsive styles to all components
+  - [x] 18.1 Add responsive styles to all components
     - Ensure mobile layout (320px+) works correctly
     - Ensure tablet layout (768px+) works correctly
     - Ensure desktop layout (1024px+) works correctly
@@ -454,14 +454,14 @@ The implementation follows a bottom-up approach: database models → controllers
     - _Requirements: 15.1, 15.2, 15.3_
 
 - [ ] 19. Implement landing page
-  - [~] 19.1 Create landing page (app/page.tsx)
+  - [x] 19.1 Create landing page (app/page.tsx)
     - Add welcome message and app description
     - Add navigation links to login and register pages
     - Style with TailwindCSS
     - Make responsive
     - _Requirements: 15.1, 15.2, 15.3_
 
-- [~] 20. Checkpoint - Frontend complete
+- [x] 20. Checkpoint - Frontend complete
   - Ensure all frontend tests pass
   - Test all user flows manually (register → login → dashboard → CRUD tasks → logout)
   - Verify responsive design on different screen sizes
@@ -469,7 +469,7 @@ The implementation follows a bottom-up approach: database models → controllers
   - Ask the user if questions arise
 
 - [ ] 21. Create documentation
-  - [~] 21.1 Create backend README.md
+  - [ ] 21.1 Create backend README.md
     - Add project description and features
     - Document setup instructions (npm install, .env configuration)
     - List all environment variables with descriptions
@@ -477,7 +477,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Add testing instructions (npm test)
     - _Requirements: All_
 
-  - [~] 21.2 Create frontend README.md
+  - [ ] 21.2 Create frontend README.md
     - Add project description and features
     - Document setup instructions (npm install, environment configuration)
     - Document available scripts (dev, build, test)
@@ -485,7 +485,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Add testing instructions
     - _Requirements: All_
 
-  - [~] 21.3 Create root README.md
+  - [ ] 21.3 Create root README.md
     - Add overall project description
     - Document tech stack
     - Add setup instructions for both frontend and backend
@@ -493,7 +493,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Add scalability plan: Nginx reverse proxy, Docker containerization, MongoDB Atlas, Redis caching, load balancing, CI/CD pipeline, rate limiting, horizontal scaling
     - _Requirements: All_
 
-  - [~] 21.4 Create Postman collection
+  - [ ] 21.4 Create Postman collection
     - Add all API endpoints with example requests
     - Include authentication flow examples
     - Add environment variables for base URL and tokens
@@ -523,7 +523,7 @@ The implementation follows a bottom-up approach: database models → controllers
     - Test API response times under load
     - _Requirements: 1.5, 2.3, 3.4, 18.1, 18.3, 18.4_
 
-- [~] 23. Final checkpoint - Project complete
+- [x] 23. Final checkpoint - Project complete
   - Ensure all tests pass
   - Verify all documentation is complete and accurate
   - Confirm application is production-ready
