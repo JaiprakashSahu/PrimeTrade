@@ -200,9 +200,6 @@ npm test
 - **Microservices**: Clean separation allows easy service extraction
 - **Docker**: Containerization ready
 
-## 📝 License
-
-MIT License - feel free to use this project for learning or commercial purposes.
 
 ## 🤝 Contributing
 
